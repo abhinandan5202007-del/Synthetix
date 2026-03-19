@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Money Mentor | Your Personal Financial GPS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fa-solid fa-robot"></i> MoneyMentor
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#calculator">Health Score</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#" class="btn-login">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Stop Saving blindly.<br>Start Investing confidently.</h1>
+                <p>95% of Indians lack a financial plan. Meet your AI-powered personal finance mentor that makes planning as easy as checking WhatsApp.</p>
+                <div class="hero-buttons">
+                    <a href="#calculator" class="btn-primary">Get Money Health Score</a>
+                    <a href="#features" class="btn-secondary">Explore Features</a>
+                </div>
+                <p class="trust-badge"><i class="fas fa-shield-alt"></i> 256-bit Encryption & Privacy First</p>
+            </div>
+            <div class="hero-image">
+                <img src="https://img.freepik.com/free-vector/financial-analysis-concept-illustration_114360-5696.jpg?t=st=1710000000~exp=1710003600~hmac=placeholder" alt="AI Finance" class="floating-img">
+                <!-- Note: Using a placeholder illustration logic for layout -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Money Health Score Calculator (Interactive) -->
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>What's Your Money Health Score?</h2>
+                <p>Take our 5-minute AI assessment to find gaps in your emergency fund, insurance, and investments.</p>
+            </div>
+
+            <div class="wizard-card">
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+
+                <!-- Step 1: Basics -->
+                <div class="form-step active" id="step-1">
+                    <h3>Step 1: The Basics</h3>
+                    <div class="input-group">
+                        <label>Monthly Take-home Income (₹)</label>
+                        <input type="number" id="income" placeholder="e.g. 80000">
+                    </div>
+                    <div class="input-group">
+                        <label>Monthly Expenses (Needs + Wants) (₹)</label>
+                        <input type="number" id="expenses" placeholder="e.g. 45000">
+                    </div>
+                    <button class="btn-next" onclick="nextStep(2)">Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+
+                <!-- Step 2: Safety Net -->
+                <div class="form-step" id="step-2">
+                    <h3>Step 2: Safety Net</h3>
+                    <div class="input-group">
+                        <label>Total Emergency Fund (Savings/FD) (₹)</label>
+                        <input type="number" id="emergency" placeholder="e.g. 200000">
+                    </div>
+                    <div class="input-group">
+                        <label>Term Insurance Cover Amount (₹)</label>
+                        <input type="number" id="insurance" placeholder="e.g. 10000000">
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn-back" onclick="prevStep(1)">Back</button>
+                        <button class="btn-next" onclick="nextStep(3)">Next <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Debt -->
+                <div class="form-step" id="step-3">
+                    <h3>Step 3: Liabilities</h3>
+                    <div class="input-group">
+                        <label>Total Monthly EMIs (₹)</label>
+                        <input type="number" id="emi" placeholder="e.g. 15000">
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn-back" onclick="prevStep(2)">Back</button>
+                        <button class="btn-submit" onclick="calculateScore()">Analyze My Finances</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Results -->
+                <div class="form-step result-step" id="step-4">
+                    <div class="loader" id="loader">
+                        <i class="fas fa-circle-notch fa-spin"></i> Analyzing your data...
+                    </div>
+                    <div class="result-content" id="result-content" style="display:none;">
+                        <div class="score-circle">
+                            <span id="score-value">0</span>
+                            <small>/ 100</small>
+                        </div>
+                        <h3 id="score-text">Analysis Complete</h3>
+                        <p id="score-desc">Here is your AI generated financial report.</p>
+                        
+                        <div class="recommendations" id="recommendations">
+                            <!-- JS will inject items here -->
+                        </div>
+
+                        <button class="btn-primary" onclick="location.reload()">Start Over</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything you need to grow your wealth</h2>
+            </div>
+            <div class="grid">
+                <!-- Feature 1 -->
+                <div class="card">
+                    <div class="icon-box"><i class="fas fa-fire"></i></div>
+                    <h3>FIRE Path Planner</h3>
+                    <p>Input your life goals, and AI builds a month-by-month roadmap to Financial Independence.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="card">
+                    <div class="icon-box"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h3>Tax Wizard</h3>
+                    <p>Upload Form 16. AI identifies missing deductions and models Old vs. New regime for you.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="card">
+                    <div class="icon-box"><i class="fas fa-baby-carriage"></i></div>
+                    <h3>Life Event Advisor</h3>
+                    <p>Got a bonus? Getting married? Having a baby? Get instant, customized financial advice.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="card">
+                    <div class="icon-box"><i class="fas fa-heart"></i></div>
+                    <h3>Couple's Planner</h3>
+                    <p>India's first joint planning tool. Optimize taxes, HRA, and goals across both partner's incomes.</p>
+                </div>
+                <!-- Feature 5 -->
+                <div class="card">
+                    <div class="icon-box"><i class="fas fa-chart-pie"></i></div>
+                    <h3>Portfolio X-Ray</h3>
+                    <p>Upload your CAMS statement. Get overlap analysis, true XIRR, and rebalancing tips in 10s.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 AI Money Mentor. Built for India 🇮🇳.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
