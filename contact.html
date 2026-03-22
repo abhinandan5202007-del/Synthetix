@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — AI Money Mentor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style_animikh.css">
+    <style>
+        .contact-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem;
+            background: radial-gradient(circle at top right, rgba(0, 212, 170, 0.05), transparent);
+        }
+    
+        .contact-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 4rem;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+        }
+    
+        .info-side h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+    
+        .info-item {
+            margin-bottom: 2rem;
+        }
+    
+        .info-item h3 {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--teal);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+    
+        .info-item p {
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+    
+        .form-side input,
+        .form-side textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 1.2rem;
+        }
+    
+        .form-side button {
+            width: 100%;
+            background: var(--gold);
+            color: #000;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+    
+        .form-side button:hover {
+            background: #ffc940;
+            transform: translateY(-2px);
+        }
+    
+        @media (max-width: 768px) {
+            .contact-card {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <div class="contact-card">
+            <div class="info-side">
+                <a href="index.html" style="color: var(--muted); text-decoration: none; font-size: 0.8rem;">← Back to Home</a><br>
+                <h1>Get in <span class="highlight">Touch</span></h1>
+                <div class="info-item">
+                    <h3>Intelligence Hub</h3>
+                    <p> Kolkata, WB<br>India </p>
+                </div>
+                <div class="info-item">
+                    <h3>Direct Signal</h3>
+                    <p>hello@aimoneymentor.io</p>
+                </div>
+            </div>
+            <div class="form-side">
+                <form>
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Intelligence Email" required>
+                    <textarea rows="5" placeholder="Your Message or Inquiry..."></textarea>
+                    <button type="submit">Transmit Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
