@@ -173,4 +173,48 @@
     </div>
 
 </body>
+<!-- Scroll Button -->
+<button id="scrollBtn" title="Scroll">↓</button>
+
+<style>
+#scrollBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+    background: var(--gold);
+    color: #000;
+    border: none;
+    padding: 14px 16px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;
+}
+#scrollBtn:hover {
+    background: #ffc940;
+    transform: translateY(-3px);
+}
+</style>
+
+<script>
+const scrollBtn = document.getElementById("scrollBtn");
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 150) {
+        scrollBtn.innerHTML = "↑"; // show up arrow
+    } else {
+        scrollBtn.innerHTML = "↓"; // show down arrow
+    }
+});
+
+scrollBtn.addEventListener("click", () => {
+    if (window.scrollY > 150) {
+        window.scrollTo({ top: 0, behavior: "smooth" }); // scroll up
+    } else {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); // scroll down
+    }
+});
+</script>
 </html>
