@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Center | AI Money Mentor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Grotesk:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #111118;
+            --teal: #00d4aa;
+            --gold: #d4af37;
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --muted: #8b8a96;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 260px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Playfair Display';
+            font-style: italic;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 3rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-text h1 {
+            font-family: 'Playfair Display';
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-label {
+            font-family: 'Bebas Neue';
+            letter-spacing: 2px;
+            color: var(--teal);
+            font-size: 0.9rem;
+        }
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        /* AI Insight Box */
+        .ai-box {
+            background: linear-gradient(145deg, #161621, #0a0a0f);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            padding: 2rem;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-box::before {
+            content: "AI INSIGHT";
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 0.7rem;
+            color: var(--teal);
+            letter-spacing: 3px;
+        }
+
+        #ai-content {
+            line-height: 1.8;
+            color: #d1d1d6;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            color: #ff4d4d;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">Wealth IQ</div>
+        <nav style="display:flex; flex-direction:column; gap: 1.5rem;">
+            <div style="color: var(--teal)">● Dashboard</div>
+            <div style="color: var(--muted)">○ Portfolio</div>
+            <div style="color: var(--muted)">○ Settings</div>
+        </nav>
+        <a onclick="logout()" class="logout-btn">Terminate Session</a>
+    </aside>
+    <div class="card" style="margin-top: 2rem;">
+        <div class="card-label">Strategic Input</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+            <input type="number" id="income" placeholder="Monthly Income (₹)" class="form-input">
+            <input type="number" id="expenses" placeholder="Monthly Expenses (₹)" class="form-input">
+            <input type="number" id="age" placeholder="Current Age" class="form-input">
+            <button onclick="runAIAgents()" class="login-btn" style="margin:0;">Generate Plan</button>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="header">
+            <div class="welcome-text">
+                <h1 id="welcome-name">Initializing...</h1>
+                <p style="color: var(--muted)">System status: <span style="color: var(--teal)">Optimized</span></p>
+            </div>
+            <div class="card" style="padding: 10px 30px;">
+                <div class="card-label">Wealth Score</div>
+                <div class="card-value" id="user-score" style="color: var(--gold)">---</div>
+            </div>
+        </div>
+
+        <div class="ai-box">
+            <div id="ai-content">
+            </div>
+        </div>
+    </main>
+
+    <script>
+    window.onload = () => {
+        // 1. Get user data from local memory
+        const user = JSON.parse(localStorage.getItem('mentor_user'));
+
+        if (!user) {
+            // If no user is logged in, send them back to login.html
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // 2. Update UI with the saved name
+        // We use a fallback "Investor" just in case the name didn't save
+        const displayName = user.name || "Investor";
+        document.getElementById('welcome-name').innerText = `Welcome, ${displayName}`;
+        
+       
+        console.log("Auth verified for:", displayName);
+        
+        // Optional: If you still have an 'ai-content' box, show a placeholder for the next dev
+        const aiBox = document.getElementById('ai-content');
+        if (aiBox) {
+            aiBox.innerHTML = "<i>System Ready. Waiting for AI Agent integration...</i>";
+        }
+    };
+
+    function logout() {
+        localStorage.removeItem('mentor_user');
+        window.location.href = 'login.html';
+    }
+</script>
+</body>
+</html>
