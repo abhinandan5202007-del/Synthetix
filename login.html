@@ -140,19 +140,19 @@
         <form>
             <div class="form-group">
                 <label class="form-label">Full Identity Name</label>
-                <input type="text" class="form-input" placeholder="e.g. Julian Sterling" required>
+                <input type="text" id="name" class="form-input" placeholder="e.g. Julian Sterling" required>
             </div>
-
+        
             <div class="form-group">
                 <label class="form-label">Enter your phone no</label>
-                <input type="number" class="form-input" placeholder="e.g. 9854712023" required>
+                <input type="number" id="password" class="form-input" placeholder="e.g. 9854712023" required>
             </div>
-
+        
             <div class="form-group">
                 <label class="form-label">Secure Intelligence Email</label>
-                <input type="email" class="form-input" placeholder="name@domain.com" required>
+                <input type="email" id="email" class="form-input" placeholder="name@domain.com" required>
             </div>
-
+        
             <button type="submit" class="login-btn">Authenticate Access</button>
         </form>
 
@@ -169,7 +169,7 @@
             </a>
         </div>
 
-        <a href="index.html" class="back-link">← Return to Main Deck</a>
+        <a href="index_animikh.html" class="back-link">← Return to Main Deck</a>
     </div>
 
 </body>
@@ -199,22 +199,58 @@
 </style>
 
 <script>
-const scrollBtn = document.getElementById("scrollBtn");
+    // The address of your Flask server
+    const API_BASE = "http://127.0.0.1:5000/api/auth";
 
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 150) {
-        scrollBtn.innerHTML = "↑"; // show up arrow
-    } else {
-        scrollBtn.innerHTML = "↓"; // show down arrow
-    }
-});
+    async function handleAuth(e) {
+        e.preventDefault(); 
 
-scrollBtn.addEventListener("click", () => {
-    if (window.scrollY > 150) {
-        window.scrollTo({ top: 0, behavior: "smooth" }); // scroll up
-    } else {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); // scroll down
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value; // This is the phone no field
+        const fullName = document.getElementById('name').value;
+
+        try {
+            // We'll try Registering first for a "New Identity" demo flow
+            let response = await fetch(`${API_BASE}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fullName, email, password })
+            });
+
+            let data = await response.json();
+
+            // If registration fails because user exists, try Login
+            if (!response.ok) {
+                console.log("User may exist, attempting login...");
+                response = await fetch(`${API_BASE}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                data = await response.json();
+            }
+
+            if (response.ok) {
+                // SUCCESS: This is the part you need for the next developer
+                // We save the Name and Email so the Dashboard can show them
+                const userSession = {
+                    name: data.name || fullName,
+                    email: email
+                };
+                localStorage.setItem('mentor_user', JSON.stringify(userSession));
+                
+                alert("Identity Authenticated. Accessing Vault...");
+                window.location.href = 'dashboard.html';
+            } else {
+                alert("Access Denied: Please check your credentials.");
+            }
+        } catch (error) {
+            console.error("Auth Error:", error);
+            alert("Terminal Offline. Ensure app.py is running!");
+        }
     }
-});
+
+    // Connect the function to your form
+    document.querySelector('form').addEventListener('submit', handleAuth);
 </script>
 </html>
